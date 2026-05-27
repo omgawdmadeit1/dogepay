@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Minimal brutalist style for speed */
+.input {
+  @apply w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:border-orange-500;
+}
+
+.btn {
+  @apply px-6 py-3 rounded-lg font-medium transition-colors;
+}
+
+.btn-primary {
+  @apply bg-orange-500 hover:bg-orange-600 text-black;
+}
+
+.btn-secondary {
+  @apply bg-zinc-800 hover:bg-zinc-700 text-white;
+}
