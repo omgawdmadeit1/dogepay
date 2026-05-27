@@ -7,19 +7,16 @@ export default function Dashboard() {
   const [links, setLinks] = useState<any[]>([]);
 
   useEffect(() => {
-    const allLinks: any[] = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key?.startsWith('dogepay_')) {
-        allLinks.push(JSON.parse(localStorage.getItem(key)!));
-      }
+    const saved = localStorage.getItem('dogepay_recent');
+    if (saved) {
+      setLinks(JSON.parse(saved));
     }
-    setLinks(allLinks.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
   }, []);
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-semibold tracking-tight mb-8">Your Payment Links</h1>
+      <h1 className="text-3xl font-semibold tracking-tight mb-2">Recent Links</h1>
+      <p className="text-zinc-400 text-sm mb-8">Only shows links you created on this device (no database yet)</p>
 
       {links.length === 0 ? (
         <div className="text-zinc-400">
@@ -27,22 +24,28 @@ export default function Dashboard() {
         </div>
       ) : (
         <div className="space-y-4">
-          {links.map((link) => (
-            <div key={link.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+          {links.map((link, index) => (
+            <div key={index} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
               <div className="font-medium mb-1">{link.description}</div>
               <div className="text-orange-400 text-sm mb-3">{link.amount} DOGE</div>
               
               <a 
-                href={`/pay/${link.id}`} 
+                href={link.link} 
                 target="_blank"
-                className="text-sm underline break-all"
+                className="text-sm underline break-all text-orange-300 hover:text-orange-400"
               >
-                {window.location.origin}/pay/{link.id}
+                {link.link}
               </a>
             </div>
           ))}
         </div>
       )}
+
+      <div className="mt-10">
+        <Link href="/create" className="btn btn-primary inline-block">
+          Create New Link
+        </Link>
+      </div>
     </div>
   );
 }
