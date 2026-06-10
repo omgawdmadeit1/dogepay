@@ -2,20 +2,39 @@
 
 import { useState } from 'react';
 
-// Clean URL-based encoding (much shorter links)
-function createPaymentUrl(data: {
+// Generate a short unique id for /pay/[id] style links (v1)
+function generateId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+// Create clean /pay/[id] link + persist data under that id for the checkout
+function createPaymentLink(data: {
   address: string;
   amount: string;
   description: string;
   successUrl?: string;
 }) {
-  const params = new URLSearchParams();
-  params.set('addr', data.address);
-  params.set('amt', data.amount);
-  params.set('desc', data.description);
-  if (data.successUrl) params.set('success', data.successUrl);
+  const id = generateId();
+  const payload = { ...data, id, createdAt: new Date().toISOString() };
 
-  return `${window.location.origin}/pay?${params.toString()}`;
+  // Persist for the hosted /pay/[id] checkout (used by the dynamic route)
+  try {
+    localStorage.setItem(`dogepay_${id}`, JSON.stringify(payload));
+  } catch {}
+
+  // Also keep lightweight recent list (for dashboard)
+  const recent = JSON.parse(localStorage.getItem('dogepay_recent') || '[]');
+  recent.unshift({
+    ...data,
+    id,
+    createdAt: payload.createdAt,
+    link: `${window.location.origin}/pay/${id}`,
+  });
+  try {
+    localStorage.setItem('dogepay_recent', JSON.stringify(recent.slice(0, 20)));
+  } catch {}
+
+  return `${window.location.origin}/pay/${id}`;
 }
 
 export default function CreateLink() {
@@ -26,21 +45,16 @@ export default function CreateLink() {
     successUrl: '',
   });
   const [link, setLink] = useState<string | null>(null);
+  const [createdId, setCreatedId] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const paymentLink = createPaymentUrl(form);
+    const paymentLink = createPaymentLink(form);
+    // Extract id from the generated link for display
+    const id = paymentLink.split('/pay/')[1] || null;
     setLink(paymentLink);
-
-    // Save to localStorage only for "recent links on this device"
-    const recent = JSON.parse(localStorage.getItem('dogepay_recent') || '[]');
-    recent.unshift({
-      ...form,
-      createdAt: new Date().toISOString(),
-      link: paymentLink,
-    });
-    localStorage.setItem('dogepay_recent', JSON.stringify(recent.slice(0, 20)));
+    setCreatedId(id);
   };
 
   return (
@@ -48,7 +62,7 @@ export default function CreateLink() {
       <div className="mb-8">
         <div className="text-orange-500 text-sm tracking-[2px] mb-1">FASTEST PATH</div>
         <h1 className="text-3xl font-semibold tracking-tight">Create DOGE Payment Link</h1>
-        <p className="text-zinc-400 mt-2 text-sm">Data lives in the link. No account needed.</p>
+        <p className="text-zinc-400 mt-2 text-sm">Data lives in the link. No account needed. v1 manual confirmation.</p>
       </div>
 
       {!link ? (
@@ -100,27 +114,31 @@ export default function CreateLink() {
         </form>
       ) : (
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
-          <div className="text-green-400 text-sm mb-3">LINK READY — COPY & SHARE</div>
+          <div className="text-green-400 text-sm mb-3">LINK READY — COPY &amp; SHARE</div>
           
           <div className="font-mono text-sm break-all bg-black p-4 rounded-xl mb-6 border border-zinc-800">
             {link}
           </div>
-          
+
           <div className="grid grid-cols-2 gap-3">
             <button 
-              onClick={() => {navigator.clipboard.writeText(link); alert('Link copied!');}}
+              onClick={() => { if (link) { navigator.clipboard.writeText(link); alert('Link copied!'); } }}
               className="btn btn-primary"
             >
               Copy Link
             </button>
             
             <a href={link} target="_blank" className="btn btn-secondary text-center">
-              Preview
+              Preview Checkout
             </a>
           </div>
 
+          <div className="mt-4 text-xs text-zinc-500">
+            Unique checkout at /pay/{createdId || 'id'}
+          </div>
+
           <button 
-            onClick={() => {setLink(null); setForm({address:'', amount:'', description:'', successUrl:''});}}
+            onClick={() => {setLink(null); setCreatedId(null); setForm({address:'', amount:'', description:'', successUrl:''});}}
             className="text-xs text-zinc-500 hover:text-white mt-6 w-full"
           >
             Create another
