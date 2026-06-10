@@ -52,13 +52,16 @@ npm install
 npm run dev
 ```
 
-## Next Actions (Revenant)
+## Deployed v1
 
-1. Set up Next.js skeleton
-2. Build Create Link flow
-3. Build public checkout page
-4. Basic dashboard
-5. Deployable state
+- Create flow now emits clean /pay/[id] hosted checkout URLs (data persisted client-side for the dynamic route).
+- Full QR (dogecoin: URI), address copy, manual paid confirmation + optional success redirect implemented and matching the locked scope.
+- Dashboard for recent links on device.
+- Latest wiring commit on main; Vercel production deploy triggered.
+
+Live URL: (update after first successful prod deploy)
+
+See also: fortune-cookie-nft launch at https://github.com/omgawdmadeit1/fortune-cookie-nft
 
 Repo managed under maximum autonomy. Ship fast. Tell the truth.
 
