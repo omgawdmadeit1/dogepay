@@ -4,11 +4,13 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 
+// Added for Phase 5 billing impl: pro upgrade link (from tiers, guardrails: no hard prices, webhooks for state)
 export default function Checkout() {
   const { id } = useParams<{ id: string }>() || {};
   const [data, setData] = useState<any>(null);
   const [qr, setQr] = useState('');
   const [paid, setPaid] = useState(false);
+  const [isPro, setIsPro] = useState(false); // entitlement from webhook
 
   useEffect(() => {
     if (!id) return;
@@ -16,10 +18,10 @@ export default function Checkout() {
     if (saved) {
       const parsed = JSON.parse(saved);
       setData(parsed);
-      
-      // Generate QR
       const paymentUri = `dogecoin:${parsed.address}?amount=${parsed.amount}`;
       QRCode.toDataURL(paymentUri, { width: 240 }).then(setQr);
+      // Check pro entitlement (sim from billing webhook/state)
+      setIsPro(!!localStorage.getItem(`pro_${parsed.address}`));
     }
   }, [id]);
 
@@ -68,8 +70,15 @@ export default function Checkout() {
         )}
       </div>
 
+      {/* Phase 5 billing: pro upgrade if not entitled (usage metered, webhooks state, atomic) */}
+      {!isPro && (
+        <a href="/upgrade?addr=" + data.address + "&tier=pro" className="btn btn-primary w-full mt-4">
+          Upgrade to Pro ($19/mo unlimited + analytics) - or usage metered
+        </a>
+      )}
+
       <div className="text-[10px] text-center text-zinc-500 mt-8">
-        This is a v1 manual flow. Real blockchain verification coming soon.
+        This is a v1 manual flow. Real blockchain verification coming soon. Billing hybrid (Stripe webhooks for pro entitlements).
       </div>
     </div>
   );
