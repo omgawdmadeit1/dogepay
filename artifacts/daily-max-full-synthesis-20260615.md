@@ -1,0 +1,1 @@
+[Copy of synthesis for artifacts]
