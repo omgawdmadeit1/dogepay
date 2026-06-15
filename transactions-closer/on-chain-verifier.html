@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMINA • ON-CHAIN VERIFIER • DOGE TX CLOSER</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+    
+    body { font-family: 'Inter', system_ui, sans-serif; }
+    .font-display { font-family: 'Space Grotesk', 'Inter', system_ui, sans-serif; font-weight: 600; letter-spacing: -0.025em; }
+    
+    .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(227,25,55,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(227,25,55,0.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    
+    .glass {
+      background: rgba(15, 15, 18, 0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(227, 25, 55, 0.2);
+    }
+    
+    .neon-border { border-color: rgba(227, 25, 55, 0.5); }
+    
+    .section-header {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #E31937;
+      font-weight: 700;
+    }
+    
+    .epic-btn {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+      font-weight: 600;
+    }
+    
+    .epic-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 35%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.6s;
+    }
+    
+    .epic-btn:hover::before { left: 280%; }
+    
+    .tx-card { transition: all 0.15s ease; }
+    .tx-card:hover { transform: translateY(-1px); border-color: rgba(227,25,55,0.45); }
+    
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    
+    .amount-big { font-size: 1.35rem; line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; }
+    
+    .status-dot { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    
+    .match-yes { background: rgba(16,185,129,0.15); border-color: #10b981; color: #10b981; }
+    .match-no { background: rgba(239,68,68,0.1); border-color: #ef4444; }
+    
+    .hud-text { text-shadow: 0 0 8px rgba(227, 25, 55, 0.3); }
+    
+    .proof-log { font-size: 10px; }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-white cyber-grid min-h-screen">
+  <div class="max-w-6xl mx-auto p-6">
+    <!-- HEADER -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-[#E31937] flex items-center justify-center">
+          <span class="text-black font-black text-2xl tracking-tighter">L</span>
+        </div>
+        <div>
+          <div class="font-display text-4xl font-bold tracking-[-2.5px] hud-text">LUMINA</div>
+          <div class="text-[10px] text-white/50 -mt-1.5 tracking-[3px]">ON-CHAIN VERIFIER • FINAL CLOSER</div>
+        </div>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-[2px] text-white/50">REAL DOGE TX • ADDR + AMOUNT + EXACT MEMO MATCH</div>
+        <div class="text-[#E31937] text-sm font-semibold flex items-center justify-end gap-1.5 mt-0.5">
+          <span class="status-dot w-1.5 h-1.5 bg-[#E31937] rounded-full inline-block"></span>
+          LIVE • DOGECHAIN POWERED
+        </div>
+      </div>
+    </div>
+
+    <!-- CRITICAL BANNER + ADDR -->
+    <div class="glass rounded-3xl p-5 mb-6 border border-[#E31937]/30">
+      <div class="flex items-start gap-4">
+        <div class="text-3xl mt-0.5">🔍</div>
+        <div class="flex-1">
+          <div class="font-bold text-[#E31937] text-lg tracking-tight">SELF-CONTAINED DOGE ON-CHAIN VERIFIER</div>
+          <div class="text-white/80 text-sm mt-1">Paste your real DOGE receive address. Fetches recent incoming txs via BlockCypher (public). Filters by amount. <strong>Links directly to dogechain.info</strong> for visual confirmation of exact memo (wallet message field). Mark full matches (addr + amt + memo) for proof logs.</div>
+          
+          <div class="mt-4">
+            <div class="text-[10px] uppercase tracking-widest text-white/50 mb-1.5">YOUR REAL DOGE RECEIVE ADDRESS (the one buyers paid / will pay to)</div>
+            <div class="flex flex-wrap gap-3 items-end">
+              <input id="addr-input" 
+                     type="text" 
+                     value="YOUR_REAL_DOGE_ADDR_HERE"
+                     class="flex-1 min-w-[360px] bg-black/60 border border-[#E31937]/60 text-white font-mono text-sm px-4 py-3 rounded-2xl focus:outline-none focus:border-[#E31937] placeholder:text-white/30"
+                     placeholder="DYourRealDogeAddressHere1234567890">
+              <div class="flex gap-2">
+                <button onclick="useDemoAddr()" class="px-4 py-3 text-xs rounded-2xl border border-white/20 hover:bg-white/5 font-semibold">DEMO</button>
+                <button onclick="clearAndFocus()" class="px-5 py-3 text-xs rounded-2xl bg-white text-black font-bold">CLEAR + PASTE REAL</button>
+              </div>
+            </div>
+            <div class="mt-1.5 text-[10px] text-white/50">Recommended: MyDoge receive-only. Never use exchange deposit. After editing pay HTMLs, this must match exactly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REAL ADDR QUICK REPLACE SECTION (transactions final closer - from receivers + completed agent X threads/announcements) -->
+    <div class="glass rounded-3xl p-5 mb-6 border border-[#E31937]/40">
+      <div class="section-header mb-2">🔁 REAL ADDR QUICK REPLACE — EXACT DEMO ADDRESSES FROM RECEIVERS</div>
+      <div class="text-xs text-white/70 mb-3">From completed agent swarm (hour1-x-threads 01-04 + receivers in hour1-goods-final/ + hour1-pay-pages/). Swap these to <strong>your real DOGE</strong> receive address (e.g. from MyDoge @OmgawdMadeit history or create new receive-only labeled "LUMINA-TRANSACTIONS-CLOSER" / "CYBERBEAST-FUND"). Use ONE addr for simplicity (all inflows to same) or dedicated per purpose. After swap: edit this verifier default + all pay HTMLs + instant-receive.html + nextlify/.env + lib/dogepay.ts + product JSONs. Verify starting 0 txs on dogechain.info. Host/push. Memos remain for exact on-chain match + verifier proof.</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
+        <div class="bg-black/60 p-3 rounded-xl border border-white/10">
+          <div class="text-[#E31937] font-bold text-[10px] tracking-wider">GENERAL / BUNDLES / MERCH / OFTEN FUND</div>
+          <div class="break-all mt-1 text-emerald-300">DEMO_D7Y7v5vL3kQvN9pX2mR8sT4wU6iO0pA1sD3fG5hJ7kL</div>
+          <div class="text-[10px] mt-1 text-white/60">(exact from general-lumina-bundles-receiver.html, cyberbeast-fund-receiver.html, tesla-trek-revenue-receiver.html + X thread examples)</div>
+          <div class="text-[10px] mt-1">Clean alt: D7Y7v5vL3kQvN9pX2mR8sT4wU6iO0pA1sD3fG5hJ7kL</div>
+        </div>
+        <div class="bg-black/60 p-3 rounded-xl border border-white/10">
+          <div class="text-[#E31937] font-bold text-[10px] tracking-wider">CYBERBEAST FUND DEDICATED (1.25M GOAL)</div>
+          <div class="break-all mt-1 text-emerald-300">D8CyberbeastFundAddressHereFor1.25MGoal1234567890</div>
+          <div class="text-[10px] mt-1 text-white/60">(from hour1-x-threads/03 + 04, go-live-60min.md, dogepay patterns)</div>
+        </div>
+        <div class="bg-black/60 p-3 rounded-xl border border-white/10">
+          <div class="text-[#E31937] font-bold text-[10px] tracking-wider">TESLA FLEET / SUSTAIN</div>
+          <div class="break-all mt-1 text-emerald-300">DEMO_D9TeslaFleetAPISustainBillingOverage10Plus12345</div>
+          <div class="text-[10px] mt-1 text-white/60">(exact from tesla-trek-revenue-receiver.html + X thread 03/04)</div>
+          <div class="text-[10px] mt-1">Clean alt: D9TeslaFleetAPISustainBillingOverage10Plus12345</div>
+        </div>
+      </div>
+      <div class="mt-3 text-[10px] text-emerald-400 font-semibold">QUICK STEPS: 1) Copy your real D... addr from MyDoge. 2) In this file + receivers/pay pages: search/replace the 3 demo strings above (incl. DEMO_ prefixes) + any "YOUR_REAL_DOGE_ADDR_HERE" with it. 3) Update this input default value too. 4) Save + re-host (GitHub raw / Vercel). 5) Paste real in top field here → FETCH. Live Lumina full flow: https://nextlify-topaz.vercel.app</div>
+    </div>
+
+    <!-- QUICK ACTIONS + EXPLORER LINKS -->
+    <div class="flex flex-wrap items-center gap-3 mb-6 text-sm">
+      <button onclick="fetchAndRenderTxs()" 
+              class="epic-btn px-6 py-2.5 rounded-2xl bg-[#E31937] text-black font-bold text-sm flex items-center gap-2">
+        🔄 FETCH &amp; CHECK TXS FROM BLOCKCYPHER
+      </button>
+      <button onclick="openExplorerAddr()" 
+              class="epic-btn px-5 py-2.5 rounded-2xl border border-white/30 text-sm font-semibold hover:bg-white/5 flex items-center gap-1.5">
+        OPEN DOGECHAIN ADDRESS PAGE
+      </button>
+      <button onclick="openBlockCypher()" 
+              class="epic-btn px-5 py-2.5 rounded-2xl border border-white/30 text-sm font-semibold hover:bg-white/5 flex items-center gap-1.5">
+        BLOCKCYPHER VIEW
+      </button>
+      <div onclick="window.open('https://dogechain.info','_blank')" class="cursor-pointer px-3 py-1.5 text-xs rounded-xl border border-white/10 text-white/60 hover:text-white flex items-center gap-1">
+        dogechain.info →
+      </div>
+      <div class="ml-auto text-[11px] text-white/40 font-mono">Amounts shown in DOGE (converted from satoshis)</div>
+    </div>
+
+    <!-- EXPECTED PAYMENTS / MATCH TARGETS -->
+    <div class="mb-6">
+      <div class="flex items-end justify-between mb-3">
+        <div>
+          <div class="section-header">EXPECTED RECEIPTS — PRE-POPULATED FROM PAY PAGES + DOGEPAY.TS</div>
+          <div class="text-xs text-white/50">Exact addr + amount + memo match = verified inflow. Click "CHECK MATCH" on a tx below or use per-expected buttons.</div>
+        </div>
+        <button onclick="addCustomExpected()" class="text-xs px-3 py-1.5 rounded-xl border border-white/20 hover:bg-white/5">+ ADD CUSTOM EXPECTED (AMOUNT + MEMO)</button>
+      </div>
+      
+      <div id="expected-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- LIVE TX RESULTS -->
+    <div class="mb-2 flex items-center justify-between">
+      <div class="section-header">LIVE ON-CHAIN TRANSACTIONS (INCOMING TO ADDR)</div>
+      <div id="tx-count" class="text-xs text-white/50 font-mono"></div>
+    </div>
+    
+    <div id="tx-results" class="glass rounded-3xl p-4 min-h-[180px] border border-white/10 mb-6">
+      <div id="tx-empty" class="text-center py-8 text-white/50 text-sm">
+        Click "FETCH &amp; CHECK TXS" above after setting your real address.<br>
+        Results will show amount, confirmations, direct dogechain.info links (open tx page to inspect payer memo).
+      </div>
+      <div id="tx-list" class="space-y-3 hidden"></div>
+    </div>
+
+    <!-- VERIFIED PROOF LOG -->
+    <div class="glass rounded-3xl p-5 border border-emerald-500/20">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <div class="section-header text-emerald-400">VERIFIED MATCH LOG (ADDR + AMOUNT + EXACT MEMO)</div>
+          <div class="text-[11px] text-white/50">Full matches only. Export this for records / Plaid / proof.</div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="exportProofLog()" class="epic-btn px-4 py-1.5 text-xs rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold">EXPORT PROOF JSON</button>
+          <button onclick="clearProofLog()" class="px-4 py-1.5 text-xs rounded-2xl border border-white/20 hover:bg-white/5">CLEAR LOG</button>
+        </div>
+      </div>
+      
+      <div id="proof-log" class="text-xs font-mono bg-black/50 rounded-2xl p-3 min-h-[70px] max-h-[180px] overflow-auto proof-log text-emerald-300/90">
+        No verified matches logged yet. Use "MARK VERIFIED" on matching txs + expected payments after confirming memo on dogechain.
+      </div>
+    </div>
+
+    <!-- FOOTER / NOTES -->
+    <div class="mt-8 text-center text-[10px] text-white/40 space-y-1">
+      <div>Self-contained • No backend • BlockCypher public read + dogechain.info deep links • Memo match is manual (open tx or wallet receipt — common for Dogecoin URI message= field).</div>
+      <div>Matches patterns from nextlify/lib/dogepay.ts, hour1-pay-pages, transactions-closer. Full Lumina marketplace: <a href="https://nextlify-topaz.vercel.app" target="_blank" class="text-[#E31937] underline">https://nextlify-topaz.vercel.app</a> (live reference — use with /marketplace /dashboard /claims)</div>
+      <div>Updated by transactions final closer: includes real addr quick replace (exact demos from receivers) + references new X threads/announcements from completed agent (see hour1-x-threads/01-lumina-dogepay-live-swarm.md etc in go-live checklist). Host • Post the 4 X threads (update addrs/URIs) • Monitor here + explorer • Record proof with export JSON.</div>
+    </div>
+  </div>
+
+  <script>
+    // === CONFIG ===
+    let CURRENT_ADDR = "YOUR_REAL_DOGE_ADDR_HERE";
+    const DEMO_ADDR = "YOUR_REAL_DOGE_ADDR_HERE";
+    const DOGE_DIVISOR = 100000000; // BlockCypher returns value in smallest unit (satoshis-equivalent)
+
+    // Pre-populated expected from pay pages + instant-receive + lib/dogepay.ts (exact memos for match)
+    let EXPECTED_PAYMENTS = [
+      { id: "b42", amount: 42, memo: "Lumina Bundle - Lumina Bundle", label: "LUMINA BUNDLE", subtitle: "Standard" },
+      { id: "b100", amount: 100, memo: "Lumina Pro Bundle - Lumina Bundle", label: "LUMINA PRO BUNDLE", subtitle: "Premium" },
+      { id: "f100", amount: 100, memo: "Cyberbeast Fund Contribution - Cyberbeast Fund • Ramp to 1.25M DOGE", label: "CYBERBEAST FUND", subtitle: "Entry" },
+      { id: "f250", amount: 250, memo: "Cyberbeast Fund Contribution - Cyberbeast Fund • Ramp to 1.25M DOGE", label: "CYBERBEAST FUND", subtitle: "Accelerator" },
+      { id: "f500", amount: 500, memo: "Cyberbeast Fund Contribution - Cyberbeast Fund • Ramp to 1.25M DOGE", label: "CYBERBEAST FUND", subtitle: "Vanguard" },
+      { id: "t850", amount: 850, memo: "Tesla Trek Merch Fund - Giga Texas Belt Buckle • 50% to Revenue Cat 124303201/33968299", label: "TESLA TREK MERCH", subtitle: "Giga Belt Buckle" },
+      { id: "n75", amount: 75, memo: "NFT Claim - Lumina Fortune - Lumina Bundle", label: "NFT CLAIM", subtitle: "Fortune Voucher" },
+      { id: "fl15", amount: 15, memo: "Fleet API Sustain $10+ Billing • Lumina Pay Tesla • Funds developer.tesla.com billing after $10/mo discount", label: "FLEET API SUSTAIN", subtitle: "15 DOGE" }
+    ];
+
+    let fetchedTxs = [];
+    let verifiedLog = [];
+
+    // Render expected grid
+    function renderExpectedGrid() {
+      const container = document.getElementById('expected-grid');
+      container.innerHTML = '';
+      
+      EXPECTED_PAYMENTS.forEach(exp => {
+        const card = document.createElement('div');
+        card.className = `glass rounded-2xl p-4 border border-white/10 flex flex-col`;
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-[10px] tracking-[1px] text-[#E31937] font-bold">${exp.label}</div>
+              <div class="text-sm text-white/70">${exp.subtitle}</div>
+            </div>
+            <div class="text-right">
+              <div class="amount-big tabular-nums">${exp.amount}</div>
+              <div class="text-[9px] -mt-0.5 text-white/40">DOGE</div>
+            </div>
+          </div>
+          
+          <div class="mt-3 bg-black/50 rounded-xl p-2.5 text-[10px]">
+            <div class="text-white/40 mb-0.5">EXACT MEMO FOR MATCH</div>
+            <div class="text-white/90 break-words leading-tight">${exp.memo}</div>
+          </div>
+          
+          <div class="mt-auto pt-3 flex gap-2">
+            <button onclick="checkExpectedAgainstTxs('${exp.id}')" 
+                    class="flex-1 epic-btn text-[10px] py-1.5 rounded-xl border border-white/20 hover:bg-white/5 font-medium">
+              CHECK MATCH IN TX LIST
+            </button>
+            <button onclick="markExpectedVerified('${exp.id}')" 
+                    class="flex-1 epic-btn text-[10px] py-1.5 rounded-xl bg-emerald-600/80 hover:bg-emerald-600 text-white font-semibold">
+              MARK VERIFIED (MANUAL)
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function addCustomExpected() {
+      const amt = prompt("Exact amount in DOGE (integer):", "42");
+      if (!amt || isNaN(parseInt(amt))) return;
+      const memo = prompt("EXACT memo string (must match payer's wallet message exactly):", "Lumina Bundle - Lumina Bundle");
+      if (!memo) return;
+      
+      const custom = {
+        id: 'custom-' + Date.now(),
+        amount: parseInt(amt),
+        memo: memo.trim(),
+        label: "CUSTOM / MANUAL",
+        subtitle: "User-added"
+      };
+      EXPECTED_PAYMENTS.push(custom);
+      renderExpectedGrid();
+      alert("Custom expected added. Use CHECK MATCH or MARK VERIFIED after fetching txs.");
+    }
+
+    // Address helpers
+    function setAddr(newAddr) {
+      CURRENT_ADDR = (newAddr || '').trim();
+      if (!CURRENT_ADDR) CURRENT_ADDR = DEMO_ADDR;
+      const input = document.getElementById('addr-input');
+      if (input) input.value = CURRENT_ADDR;
+    }
+
+    window.useDemoAddr = function() {
+      const input = document.getElementById('addr-input');
+      input.value = DEMO_ADDR;
+      setAddr(input.value);
+    };
+
+    window.clearAndFocus = function() {
+      const input = document.getElementById('addr-input');
+      input.value = '';
+      input.focus();
+      input.placeholder = "Paste your real D... address here";
+    };
+
+    function initAddrInput() {
+      const input = document.getElementById('addr-input');
+      input.value = CURRENT_ADDR;
+      input.addEventListener('input', () => {
+        setAddr(input.value);
+      });
+      input.addEventListener('blur', () => {
+        if (!input.value.trim()) input.value = CURRENT_ADDR;
+      });
+    }
+
+    // Explorer links
+    window.openExplorerAddr = function() {
+      const url = `https://dogechain.info/address/${CURRENT_ADDR}`;
+      window.open(url, '_blank');
+    };
+    window.openBlockCypher = function() {
+      const url = `https://blockcypher.com/doge/address/${CURRENT_ADDR}`;
+      window.open(url, '_blank');
+    };
+
+    // Fetch from BlockCypher (public, no token for basic usage)
+    async function fetchTxs(addr) {
+      const apiUrl = `https://api.blockcypher.com/v1/doge/main/addrs/${encodeURIComponent(addr)}?limit=30`;
+      const res = await fetch(apiUrl);
+      if (!res.ok) {
+        throw new Error(`BlockCypher fetch failed: ${res.status} ${res.statusText}. Try again or use direct dogechain link.`);
+      }
+      const data = await res.json();
+      
+      // Combine confirmed + unconfirmed txrefs (positive value = received)
+      let allRefs = [];
+      if (data.txrefs && Array.isArray(data.txrefs)) {
+        allRefs = allRefs.concat(data.txrefs);
+      }
+      if (data.unconfirmed_txrefs && Array.isArray(data.unconfirmed_txrefs)) {
+        allRefs = allRefs.concat(data.unconfirmed_txrefs);
+      }
+      
+      // Filter incoming (value > 0) and map to useful shape
+      const incoming = allRefs
+        .filter(r => r.value && r.value > 0)
+        .map(r => ({
+          tx_hash: r.tx_hash,
+          value_sats: r.value,
+          amount_doge: (r.value / DOGE_DIVISOR),
+          confirmations: r.confirmations || 0,
+          block_height: r.block_height || null,
+          received: r.confirmed || new Date().toISOString()
+        }))
+        .sort((a, b) => b.confirmations - a.confirmations); // more conf first
+      
+      return incoming;
+    }
+
+    async function fetchAndRenderTxs() {
+      const input = document.getElementById('addr-input');
+      const addr = (input.value || '').trim() || CURRENT_ADDR;
+      setAddr(addr); // sync
+      
+      const container = document.getElementById('tx-list');
+      const empty = document.getElementById('tx-empty');
+      container.innerHTML = '';
+      empty.classList.add('hidden');
+      container.classList.remove('hidden');
+      
+      const loading = document.createElement('div');
+      loading.className = 'text-sm text-white/60 py-4 text-center';
+      loading.textContent = `Fetching recent txs for ${addr.slice(0,12)}... via BlockCypher →`;
+      container.appendChild(loading);
+      
+      try {
+        fetchedTxs = await fetchTxs(addr);
+        
+        container.innerHTML = '';
+        
+        if (!fetchedTxs.length) {
+          const none = document.createElement('div');
+          none.className = 'text-center py-6 text-white/60 text-sm';
+          none.innerHTML = `No incoming txs found (or very new). <br><span class="text-[11px]">Direct link: <a href="https://dogechain.info/address/${addr}" target="_blank" class="text-[#E31937] underline">dogechain.info/address/${addr}</a></span>`;
+          container.appendChild(none);
+        } else {
+          fetchedTxs.forEach((tx, idx) => {
+            const div = document.createElement('div');
+            div.className = `tx-card glass rounded-2xl p-4 border border-white/10 flex flex-col md:flex-row md:items-center gap-3`;
+            
+            const amtStr = tx.amount_doge.toFixed(tx.amount_doge < 1 ? 4 : 2);
+            const confStr = tx.confirmations >= 6 ? `${tx.confirmations} conf` : `${tx.confirmations} conf (pending)`;
+            const dateStr = tx.received ? new Date(tx.received).toLocaleString() : 'recent';
+            
+            div.innerHTML = `
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline gap-2">
+                  <div class="amount-big text-emerald-400 tabular-nums">${amtStr}</div>
+                  <div class="text-emerald-400/70 text-sm">DOGE</div>
+                  <div class="text-[10px] px-2 py-px rounded bg-white/5 text-white/50">${confStr}</div>
+                </div>
+                <div class="text-[10px] text-white/40 mt-0.5">${dateStr}</div>
+                <div class="mono text-[10px] text-white/70 mt-1 break-all">${tx.tx_hash}</div>
+              </div>
+              
+              <div class="flex flex-col md:flex-row gap-2 md:items-center shrink-0">
+                <a href="https://dogechain.info/tx/${tx.tx_hash}" target="_blank" 
+                   class="epic-btn text-center text-xs px-4 py-2 rounded-2xl border border-[#E31937]/50 text-[#E31937] hover:bg-[#E31937]/10 font-semibold whitespace-nowrap">
+                  VIEW TX ON DOGECHAIN
+                </a>
+                <a href="https://dogechain.info/address/${CURRENT_ADDR}" target="_blank" 
+                   class="epic-btn text-center text-xs px-4 py-2 rounded-2xl border border-white/20 hover:bg-white/5 font-medium whitespace-nowrap">
+                  ADDR PAGE
+                </a>
+                <button onclick="markTxVerifiedFromList(${idx})" 
+                        class="epic-btn text-xs px-4 py-2 rounded-2xl bg-white/10 hover:bg-emerald-600 text-white font-medium whitespace-nowrap">
+                  MATCH THIS TX
+                </button>
+              </div>
+            `;
+            container.appendChild(div);
+          });
+        }
+        
+        document.getElementById('tx-count').textContent = `${fetchedTxs.length} incoming • last checked ${new Date().toLocaleTimeString()}`;
+      } catch (err) {
+        container.innerHTML = '';
+        const errDiv = document.createElement('div');
+        errDiv.className = 'text-red-400 text-sm p-4';
+        errDiv.innerHTML = `Error fetching: ${err.message}<br><span class="text-white/60">Fallback: <a href="https://dogechain.info/address/${addr}" target="_blank" class="underline">Open dogechain.info/address/${addr}</a> manually and compare amounts + inspect tx pages for memo.</span>`;
+        container.appendChild(errDiv);
+      }
+    }
+
+    // Find matching txs for an expected payment (amount match)
+    window.checkExpectedAgainstTxs = function(expectedId) {
+      const exp = EXPECTED_PAYMENTS.find(e => e.id === expectedId);
+      if (!exp) return;
+      
+      if (!fetchedTxs.length) {
+        alert("No txs fetched yet. Click FETCH & CHECK TXS first.");
+        return;
+      }
+      
+      const matches = fetchedTxs.filter(tx => {
+        const diff = Math.abs(tx.amount_doge - exp.amount);
+        return diff < 0.0001; // floating tolerance for exact
+      });
+      
+      if (!matches.length) {
+        alert(`No txs with exact ${exp.amount} DOGE found in the fetched list.\n\nOpen dogechain address page and check recent activity manually.`);
+        return;
+      }
+      
+      // Highlight / scroll to first match + show confirmation dialog
+      const first = matches[0];
+      alert(`AMOUNT MATCH FOUND for ${exp.amount} DOGE\n\nExpected memo:\n${exp.memo}\n\nOpen the dogechain TX link below to visually confirm the payer included the EXACT message in their wallet when sending.\n\nTX: https://dogechain.info/tx/${first.tx_hash}\n\nIf memo matches exactly + tx is confirmed to your addr, click MARK VERIFIED on the expected card or use the button on the tx row.`);
+      
+      // Also try to highlight in DOM (re-fetch not needed)
+      window.open(`https://dogechain.info/tx/${first.tx_hash}`, '_blank');
+    };
+
+    // Mark an expected as verified (manual memo confirm path)
+    window.markExpectedVerified = function(expectedId) {
+      const exp = EXPECTED_PAYMENTS.find(e => e.id === expectedId);
+      if (!exp) return;
+      
+      const txid = prompt("Optional: Paste the exact TXID / tx hash that matches this expected (or leave blank for manual note):", "");
+      
+      const entry = {
+        id: Date.now(),
+        ts: new Date().toISOString(),
+        addr: CURRENT_ADDR,
+        expectedId: exp.id,
+        amount: exp.amount,
+        memo: exp.memo,
+        tx_hash: txid || "MANUAL-" + Date.now(),
+        source: "manual-expected",
+        label: exp.label,
+        explorer: `https://dogechain.info/address/${CURRENT_ADDR}`,
+        txExplorer: txid ? `https://dogechain.info/tx/${txid}` : null
+      };
+      
+      verifiedLog.unshift(entry);
+      renderProofLog();
+      
+      alert(`Marked verified: ${exp.amount} DOGE — ${exp.memo}\n\nProof logged. Export JSON for records.\n\nRemember to open the explorer link and screenshot the tx + your wallet history showing the memo.`);
+    };
+
+    // Mark from the live tx list (user has visually confirmed memo on dogechain)
+    window.markTxVerifiedFromList = function(txIndex) {
+      const tx = fetchedTxs[txIndex];
+      if (!tx) return;
+      
+      // Find best matching expected (by amount)
+      let bestMatch = null;
+      let bestDiff = Infinity;
+      
+      EXPECTED_PAYMENTS.forEach(exp => {
+        const d = Math.abs(exp.amount - tx.amount_doge);
+        if (d < bestDiff) {
+          bestDiff = d;
+          bestMatch = exp;
+        }
+      });
+      
+      const memoToUse = bestMatch ? bestMatch.memo : prompt("Enter the EXACT memo the payer used (from wallet receipt or tx details):", "Lumina Bundle - Lumina Bundle");
+      
+      const entry = {
+        id: Date.now(),
+        ts: new Date().toISOString(),
+        addr: CURRENT_ADDR,
+        amount: tx.amount_doge,
+        memo: memoToUse,
+        tx_hash: tx.tx_hash,
+        source: "tx-list",
+        label: bestMatch ? bestMatch.label : "TX-LIST MATCH",
+        explorer: `https://dogechain.info/address/${CURRENT_ADDR}`,
+        txExplorer: `https://dogechain.info/tx/${tx.tx_hash}`
+      };
+      
+      verifiedLog.unshift(entry);
+      renderProofLog();
+      
+      alert(`Logged verified tx:\n${tx.amount_doge} DOGE — ${memoToUse}\n\nTX: https://dogechain.info/tx/${tx.tx_hash}\n\nExport the proof log now. Screenshot the tx page as additional evidence.`);
+    };
+
+    function renderProofLog() {
+      const el = document.getElementById('proof-log');
+      if (!verifiedLog.length) {
+        el.innerHTML = 'No verified matches logged yet. Use "MARK VERIFIED" on matching txs + expected payments after confirming memo on dogechain.';
+        return;
+      }
+      
+      el.innerHTML = verifiedLog.map((v, i) => {
+        const shortTx = v.tx_hash && v.tx_hash.length > 12 ? v.tx_hash.slice(0,10) + '…' : v.tx_hash;
+        return `
+          <div class="mb-2 pb-2 border-b border-white/10 last:border-0 last:mb-0 last:pb-0">
+            <div class="flex justify-between">
+              <span class="text-emerald-400">${v.amount} DOGE • ${v.label || ''}</span>
+              <span class="text-white/40">${new Date(v.ts).toLocaleTimeString()}</span>
+            </div>
+            <div class="text-[10px] break-all text-white/70 mt-0.5">${v.memo}</div>
+            <div class="text-[9px] text-white/50 mt-0.5 flex gap-2 items-center">
+              <span>ADDR: ${v.addr.slice(0,12)}…</span>
+              ${v.txExplorer ? `<a href="${v.txExplorer}" target="_blank" class="underline text-[#E31937]">TX LINK</a>` : ''}
+              <a href="${v.explorer}" target="_blank" class="underline">ADDR</a>
+              ${v.tx_hash.startsWith('MANUAL') ? '' : `<span class="mono">${shortTx}</span>`}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.exportProofLog = function() {
+      if (!verifiedLog.length) {
+        alert("No proofs logged yet.");
+        return;
+      }
+      
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        receiverAddr: CURRENT_ADDR,
+        verifiedCount: verifiedLog.length,
+        proofs: verifiedLog,
+        note: "Addr + amount + exact memo matches verified on-chain via dogechain.info. Cross-reference tx pages and payer receipts. Generated by LUMINA on-chain-verifier.html (updated by transactions final closer with new X threads from completed agent + real addr quick replace from receivers). Full announcements: hour1-x-threads/01-04.",
+        source: "C:\\Users\\Josep\\transactions-closer\\on-chain-verifier.html",
+        links: {
+          dogechainAddr: `https://dogechain.info/address/${CURRENT_ADDR}`,
+          fullLumina: "https://nextlify-topaz.vercel.app"
+        }
+      };
+      
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `lumina-doge-onchain-proof-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    window.clearProofLog = function() {
+      if (confirm("Clear all logged proofs?")) {
+        verifiedLog = [];
+        renderProofLog();
+      }
+    };
+
+    // Init
+    function init() {
+      const input = document.getElementById('addr-input');
+      if (input) input.value = CURRENT_ADDR;
+      
+      initAddrInput();
+      renderExpectedGrid();
+      renderProofLog();
+      
+      // Keyboard: / focuses addr
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+          e.preventDefault();
+          input.focus();
+          input.select();
+        }
+      });
+      
+      // Optional auto-hint
+      setTimeout(() => {
+        const hint = document.createElement('div');
+        hint.className = 'fixed bottom-4 right-4 text-[9px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/30';
+        hint.textContent = 'Press / to jump to address • Fetch txs after editing to real addr';
+        document.body.appendChild(hint);
+        setTimeout(() => hint.remove(), 5200);
+      }, 4800);
+      
+      // Seed a couple demo verified entries for feel (comment for real use)
+      // console.log('%c[on-chain-verifier] Ready. Replace addr, fetch, confirm memos on dogechain.info links.', 'color:#E31937');
+    }
+    
+    window.onload = init;
+  </script>
+</body>
+</html>
