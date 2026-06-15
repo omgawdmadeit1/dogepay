@@ -12,13 +12,13 @@
 
 **Pitch/Outreach (prepared for form + X)**:
 Form fill (tesla.com/fleet):
-- Name: [Your/Joseph Lamar Taylor], Phone: [ ], Email: josephlamartaylor@gmail.com, Zip: [ ], Company: [Tesla Trek / Your Entity], Job Title: Founder/Creator, Country: US, Industry: Technology, Current Fleet: 0 Tesla, Quantity: 2 Cyberbeasts, Timing: Within 30 days, Payment: Cash or Lease, Comments: 'Tesla Trek Creator Protocol (tesla-trek.com) integrates real Tesla Fleet/GPS/Grok/Leaflet for missions, creator revenue. Seeking 2 Cyberbeasts for official company fleet + product development/demo. Real integration via open tesla_fleet.py (XYO payloads). Energy data to our cashflow (real BoA). Propose partnership: fleet discount/incentives for 2, co-marketing, data sharing. Contact for deal.'
-X Post draft: '@Tesla @elonmusk Tesla Trek (real Fleet/Grok integration for creators, tesla-trek.com) wants 2 Cyberbeasts for official loop: real missions, energy in cashflow, sales proof. Work deal for 2? Fleet pricing + partnership? #Cyberbeast #TeslaFleet'
+- Name: [Joseph Lamar Taylor], Phone: [real], Email: josephlamartaylor@gmail.com, Zip: [real], Company: Tesla Trek / [Entity for 6761], Job Title: Founder, Country: US, Industry: Technology, Current Fleet: 0 Tesla, Quantity: 2 Cyberbeasts, Timing: Within 30 days, Payment: Cash or Lease, Comments: 'Tesla Trek Creator Protocol (tesla-trek.com) integrates real Tesla Fleet/GPS/Grok/Leaflet for missions, creator revenue. Seeking 2 Cyberbeasts for official company fleet + product development/demo. Real integration via open tesla_fleet.py (XYO payloads). Energy data to our cashflow (real BoA 6761). Propose partnership: fleet discount/incentives for 2, co-marketing, data sharing. Contact for deal.'
+X Post draft: '@Tesla @elonmusk Tesla Trek (real Fleet/Grok integration for creators, tesla-trek.com) wants 2 Cyberbeasts for official loop: real missions, energy in cashflow 6761, sales proof. Work deal for 2? Fleet pricing + partnership? #Cyberbeast #TeslaFleet'
 
 **Profitable Loop Integration**:
 - Fund: Current DogePay revenue ( /pay/tesla-trek-*2026 from prior), cognitum leads (11+), yields on cashflow freed (~$120 30% Morpho/Aave/Ledn real rates).
 - Real Data: Post-purchase, Cyberbeast charging/energy to cashflow 6761 (route 50% BoA), real telemetry to tesla_fleet.py for product (update code if needed).
-- Sell: Upsell 'Cyberbeast Fleet Edition' Kit/SaaS bundles. Real footage in sales-playbook/README, Gamma assets (wqi755tnpzp0byg prior + new).
+- Sell: Upsell 'Cyberbeast Fleet Edition' Kit/SaaS bundles. Real footage in sales-playbook/README, Gamma assets.
 - Compound: 50% BoA (real routing), 30% yields (proceeds from sales), 20% MRR (new fleet SaaS upsells + leads). Tax savings offset cost. Official: Git evidence, updated playbooks.
 
 **Updates (Git pushed)**:
