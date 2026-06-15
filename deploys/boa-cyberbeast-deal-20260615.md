@@ -12,7 +12,7 @@
 
 **Pitch/Outreach (prepared for form + X)**:
 Form fill (tesla.com/fleet):
-- Name: [Joseph Lamar Taylor], Phone: [real], Email: josephlamartaylor@gmail.com, Zip: [real], Company: Tesla Trek / [Entity for 6761], Job Title: Founder, Country: US, Industry: Technology, Current Fleet: 0 Tesla, Quantity: 2 Cyberbeasts, Timing: Within 30 days, Payment: Cash or Lease, Comments: 'Tesla Trek Creator Protocol (tesla-trek.com) integrates real Tesla Fleet/GPS/Grok/Leaflet for missions, creator revenue. Seeking 2 Cyberbeasts for official company fleet + product development/demo. Real integration via open tesla_fleet.py (XYO payloads). Energy data to our cashflow (real BoA 6761). Propose partnership: fleet discount/incentives for 2, co-marketing, data sharing. Contact for deal.'
+- Name: Joseph Lamar Taylor, Phone: [real], Email: josephlamartaylor@gmail.com, Zip: [real], Company: Tesla Trek / [Entity for 6761], Job Title: Founder, Country: US, Industry: Technology, Current Fleet: 0 Tesla, Quantity: 2 Cyberbeasts, Timing: Within 30 days, Payment: Cash or Lease, Comments: 'Tesla Trek Creator Protocol (tesla-trek.com) integrates real Tesla Fleet/GPS/Grok/Leaflet for missions, creator revenue. Seeking 2 Cyberbeasts for official company fleet + product development/demo. Real integration via open tesla_fleet.py (XYO payloads). Energy data to our cashflow (real BoA 6761). Propose partnership: fleet discount/incentives for 2, co-marketing, data sharing. Contact for deal.'
 X Post draft: '@Tesla @elonmusk Tesla Trek (real Fleet/Grok integration for creators, tesla-trek.com) wants 2 Cyberbeasts for official loop: real missions, energy in cashflow 6761, sales proof. Work deal for 2? Fleet pricing + partnership? #Cyberbeast #TeslaFleet'
 
 **Profitable Loop Integration**:
