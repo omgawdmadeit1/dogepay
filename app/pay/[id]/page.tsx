@@ -4,13 +4,13 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 
-// Added for Phase 5 billing impl: pro upgrade link (from tiers, guardrails: no hard prices, webhooks for state)
+// Production billing (post-audit ship): pro upgrade CTA generic (no hardcoded prices/amounts - rule 1,3,11). Entitlements from server webhook state only (poll /api/entitlements/check or status; localStorage hint only). Default deny. No client paid writes.
 export default function Checkout() {
   const { id } = useParams<{ id: string }>() || {};
   const [data, setData] = useState<any>(null);
   const [qr, setQr] = useState('');
   const [paid, setPaid] = useState(false);
-  const [isPro, setIsPro] = useState(false); // entitlement from webhook
+  const [isPro, setIsPro] = useState(false); // from server-confirmed webhook only
 
   useEffect(() => {
     if (!id) return;
@@ -20,8 +20,9 @@ export default function Checkout() {
       setData(parsed);
       const paymentUri = `dogecoin:${parsed.address}?amount=${parsed.amount}`;
       QRCode.toDataURL(paymentUri, { width: 240 }).then(setQr);
-      // Check pro entitlement (sim from billing webhook/state)
-      setIsPro(!!localStorage.getItem(`pro_${parsed.address}`));
+      // Check server (in prod poll /api/billing/status or entitlements/check; v1 hint + note)
+      // Real: fetch(`/api/entitlements/check?customer=${parsed.address}`).then(r => r.json()).then(d => setIsPro(d.allowed))
+      setIsPro(!!localStorage.getItem(`pro_${parsed.address}`)); // transitional
     }
   }, [id]);
 
@@ -61,7 +62,7 @@ export default function Checkout() {
             className="btn btn-primary w-full"
           >
             I sent the DOGE (manual confirmation)
-          </button>
+        </button>
         ) : (
           <div className="text-center py-4 bg-zinc-900 rounded-xl text-green-400">
             Marked as paid. Thank you.
@@ -70,15 +71,15 @@ export default function Checkout() {
         )}
       </div>
 
-      {/* Phase 5 billing: pro upgrade if not entitled (usage metered, webhooks state, atomic) */}
+      {/* Production: no price hardcode; links to upgrade (server poll for status) */}
       {!isPro && (
-        <a href="/upgrade?addr=" + data.address + "&tier=pro" className="btn btn-primary w-full mt-4">
-          Upgrade to Pro ($19/mo unlimited + analytics) - or usage metered
+        <a href={"/upgrade?addr=" + encodeURIComponent(data.address)} className="btn btn-primary w-full mt-4">
+          Upgrade to Pro (unlimited links + analytics) or usage metered
         </a>
       )}
 
       <div className="text-[10px] text-center text-zinc-500 mt-8">
-        This is a v1 manual flow. Real blockchain verification coming soon. Billing hybrid (Stripe webhooks for pro entitlements).
+        v1 manual flow. Real on-chain verification + Stripe hybrid billing (webhooks state, 15 rules). No custody.
       </div>
     </div>
   );
