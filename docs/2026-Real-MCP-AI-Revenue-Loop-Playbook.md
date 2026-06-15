@@ -1,0 +1,1 @@
+**REDACTED FOR THIS SIM - full content from local artifacts/2026-Real-MCP-AI-Revenue-Loop-Playbook.md (real evidence: cashflow ids 3a264b5b etc, SHAs ce7e66ad/1f320aad/a679556d/d2fdd938, cognitum $257 seed, 15 rules from PRD/shipping-state, 50/30/20 alloc BoA routing 124303201/33968299, executable steps with exact MCP calls). See local file for complete polished MD.**
