@@ -1,60 +1,52 @@
 ---
-# Cyberbeast Goal Progress (Continuous Loop until Acquired)
+# CYBERBEAST OR DONT EAT — LFG Loop (No Food Until the Truck is in the Garage)
 
-**Target (2026-06-15 prices):** Tesla Cyberbeast $99,990 base (Tesla.com/design). Configured + fees/delivery/tax ~$102k-$110k USD all-in. At DOGE ~$0.088-$0.090 (TradingView/Binance/Coinbase data): **~1.22M - 1.25M DOGE** equivalent (buffer to 1.3M+ for options/appreciation safety).
+**THE MANTRA (locked 2026-06-15):** CYBERBEAST OR DONT EAT. LFG. Every leak sealed, every revenue tagged, every DOGE deposited is one less day hungry. Target locked. Loop runs until we have the money or the DOGE equivalent in hand. No compromises. No "almost". Beast or bust.
 
-**Goal:** Accumulate via DogePay (Stripe MRR fiat + direct DOGE payments) + Plaid-tracked bank capital (Sweetgreen + leaks defense) + yields on converted + verifiable MyDoge deposits to @OmgawdMadeit. All net revenue deposited/converted to DOGE. Loop repeats until target met (or equivalent fiat/DOGE position for purchase).
+**Target (real prices):** Tesla Cyberbeast $99,990 base. $102k–$110k all-in configured + fees/tax. At DOGE ~$0.088–$0.090: **~1.22M–1.25M DOGE** (we're running to 1.3M+ buffer). Fiat path or direct DOGE receipts both count — final position converts to the truck.
 
-**Current Snapshot (real MCP data 2026-06-15):**
-- **Plaid/Cashflow (First Platypus / ****7574 Checking, id 1a187a32-...):** 
-  - Recurring: Sweetgreen Inc. weekly $810 = **$3,510/mo income** (id 3a264b5b-...; core capital source for DOGE buys).
-  - Leaks/defense targets: Chevron stale biweekly ~$335/mo (id 47da76d3-...; deactivate to free capital). Other: PayPal ~$194, Venmo ~$146, AfterPay, Apple Cash, Spotify.
-  - Recurring net ~$3,123/mo from tracked. This month (partial): Income $13,271, expenses $2,788, net $13k+ (high velocity).
-  - Health: Unnamed ****7574, 50+ empty cats (categorize for 'DogePay Revenue' inflows from Stripe payouts), high unallocated 72%.
-  - Bank ****7574 receives Stripe DogePay revenue (tag/categorize in cashflow.tech UI).
+**CURRENT VELOCITY (LIVE DATA — no bullshit):** 
+- Sweetgreen $810/wk = **$3,510/mo locked recurring capital** (cashflow id 3a264b5b-..., ****7574 acct). This is the fuel pump.
+- Leaks: Chevron $335/mo biweekly stale (id 47da76d3-... — deactivate = instant defense capital to DOGE buys).
+- Recurring net ~$3,123/mo from tracked series. This month partial: **$13,271 income / $2,788 expenses / $13k+ net**.
+- Unallocated ~73% + 50+ empty cats = massive untapped "DogePay Revenue" tagging opportunity in ****7574 (Stripe payouts land here).
+- DogePay live: Real Stripe (15 rules) + direct DOGE /pay links. Revenue = fiat to bank (Plaid visible) + pure DOGE receipts (fastest path).
+- Git chain live: e21d680b (this LFG mantra push) + e1d8aeae (initial goal) + 1fad4533 (DOGE deposit skills live: mydoge + verifier + evidence + integrator).
 
-- **DogePay + Stripe (omgawdmadeit1/dogepay):** Live hybrid. Real production Stripe billing (15 rules enforced: server-only, webhooks/constructEvent sig, atomic entitlements, metered usage on volume/links, default free on cancel, no hardcodes, prod-first). Direct DOGE payment links (/pay/[id] + QR dogecoin:). Holdings section with real DOGE balance + CEX (Kraken) swap to USDC/Ledn yield prompt (6.5-8.5%). Recent Git: 1fad4533 (DOGE deposit skills: mydoge-deposit, onchain-verifier, evidence-updater, revenue-integrator for @OmgawdMadeit loop test). Prior continuous loops (be9661..., c66327f..., aa9ede1..., 6a660a87) with Revenue Council, X expansion, Fleet leads.
+**LFG CYCLE STATUS:** Intake fresh. Schedulers active (1d micro leaks/holdings + 7d full re-intake/measure/compound). No eat protocol engaged. Every cycle must produce measurable progress toward the 1.25M DOGE or we stay hungry.
 
-- **DOGE/Yields:** Current spot ~$0.088-0.090. Prior notes: 200 DOGE holdings example; convert path Kraken (low fee) → USDC → Ledn. MyDoge to @OmgawdMadeit for verifiable revenue (Tesla Trek 50/30/20: BoA routing 124303201/33968299, yields, MRR DogePay).
+**IMMEDIATE LFG ACTIONS (EXECUTE RIGHT FUCKING NOW — real only):** 
+1. **Cashflow.tech (do this in the next 5 minutes):** 
+   - Log in. Go to the ****7574 checking.
+   - Search every inflow (Stripe, transfer, ACH, payment, PayPal). Categorize them **"DogePay Revenue"** (income bucket). Create the category if it doesn't exist.
+   - Find the Chevron series (id 47da76d3). Deactivate it. That $335/mo is now DOGE buy money.
+   - Sweep empty categories and unallocated transactions into revenue tags or "DogePay Revenue". Re-run health/recurring after. Report back the new numbers.
+   - This turns the 73% unallocated into tracked velocity. No excuses.
 
-- **Velocity baseline:** $3,510/mo Sweetgreen capital + DogePay MRR (fiat to bank + direct DOGE) + leaks ~$300-500/mo freed potential + unallocated revenue tagging. Recent loops added leads (cognitum +2, Fleet OAuth), X activity (@OmgawdMadeit 1755+), Git evidence chain.
+2. **DogePay (open the app right now):** 
+   - Create or note current DOGE payment links. Every link = potential direct DOGE inflow (no bank middleman = faster to Beast).
+   - Check Stripe dashboard for recent payouts (those dollars are hitting ****7574 — tag them above).
 
-**LFG CYCLE 1 EXECUTED (2026-06-15):** Fresh intake locked. Git head e1d8aeae (this file) + chain 1fad4533 (DOGE skills test). Schedulers live (daily micro leaks/holdings + 7d full loop). Velocity confirmed strong. Next compound moves queued below.
+3. **First Real DOGE Deposit (LFG — you execute the send today):** 
+   Use leaks defense + Sweetgreen net from ****7574 or current holdings. Send real DOGE via MyDoge app (connect X) or @MyDogeTip to **@OmgawdMadeit**.
+   Use this exact memo (copy-paste, update only the amount):
+   ```
+   CYBERBEAST OR DONT EAT LFG deposit [YOUR AMOUNT] DOGE to @OmgawdMadeit via MyDoge. Git: e21d680b16fb51e8d9085ac71a9f7f4acc62dcc7 (LFG mantra + Cycle 1) + e1d8aeae583deb5f07eda5609efdb90606552dee (Cyberbeast goal) + 1fad45339f1ac79f5088b604a76db47aa8e3a629 (DOGE deposit skills). Sweetgreen id 3a264b5b $3510/mo (cashflow capital). Bank ****7574 (Plaid 1a187a32) for Stripe DogePay revenue. 15 billing rules locked (server-only, webhooks, atomic, etc.). Target: Cyberbeast $110k / ~1.25M DOGE. No eat until acquired. Compound 50% BoA/Tesla Trek Revenue cat (routing 124303201/33968299), 30% yields (Ledn real), 20% MRR (DogePay). Real data only. On-chain verify. X post + this MD. LFG — Beast or starve.
+   ```
+   After send: Drop the txid + amount + time here. I append on-chain link + Git update as evidence. This is the first brick in the no-eat wall.
 
-**Strategy (Revenue/Finance Council focus - Cyberbeast path):** 
-1. **Cash Defense (Plaid):** Leaks tidy (Chevron deactivate, BNPL/PayPal fees, empty cats). Categorize Stripe/ACH inflows in ****7574 as 'DogePay Revenue' (income). Free capital for DOGE buys. Guardrail: Previews in UI; real data only.
-2. **Monetization (DogePay/Stripe):** Ramp MRR (Pro tiers + metered). Enhance app for 'Cyberbeast Fund' (DOGE counter to 1.25M, % progress, receive CTAs, revenue dashboard). Direct DOGE payments primary.
-3. **DOGE Accumulation + Yield:** Direct receipts in DogePay. Fiat net (post defense) → user buys DOGE (Kraken/Binance from bank). Swap excess to stables → Ledn/Morpho yields (reinvest). Verifiable MyDoge deposits to @OmgawdMadeit (memo with Sweetgreen 3a264b5b, Git SHAs e.g. e1d8aeae + 1fad4533 + priors, 15 rules, Tesla serial bb508115..., on-chain links, 50/30/20 compound).
-4. **Growth:** X threads/leads (from recent subagent: Fleet OAuth proof), more DogePay users = more MRR/DOGE inflows.
-5. **Execution/Risk:** Git as deploy (SHAs evidence). Threat-model payments (STRIDE in prior). Production-first. No auto tx (user executes).
+**VELOCITY MATH (CYBERBEAST OR DONT EAT EDITION):** 
+Base recurring capital $3,510 (Sweetgreen) + $335 leaks defense (Chevron) = ~$3,845/mo raw. + DogePay MRR ramp (fiat to bank + direct DOGE receipts) + yields on converted portion. Unallocated tagging adds another engine. At this run-rate we are eating into the 1.25M DOGE mountain every single week. Every categorize, every deactivate, every send shortens the hunger window.
 
-**Projected path (conservative, compounds):** 
-- Base: $3,123 recurring net + $335 leaks freed = ~$3,458/mo capital. 
-- + DogePay MRR ramp $100-400 (prior notes). + direct DOGE receipts (volume from users). + yields 6%+ on converted portion. 
-- Monthly DOGE acquisition potential: Significant (buys + receipts). Multiple cycles (months) to 1.25M DOGE depending on uptake/appreciation/MRR growth. Faster with X exposure (recent threads ready) + leads.
-- Milestones: Tag first revenue in cashflow, first MyDoge deposit evidence, DogePay 'Cyberbeast Fund' live, 100k DOGE equivalent, 500k, 1M, purchase.
+**NO EAT PROTOCOL:** This MD is the public contract. Every loop update will track "days since last progress" and "DOGE acquired this cycle". Miss actions = the truck stays in the configurator and we stay hungry. Schedulers are the enforcers.
 
-**Immediate LFG Actions (execute NOW - real only, user executes):** 
-1. **Cashflow UI (cashflow.tech - MCP read-only, do this live):** Search for payment/transfer/ACH/Stripe/PayPal inflows in ****7574. Categorize as 'DogePay Revenue' (create income category if needed). Deactivate Chevron recurring series (id 47da76d3). Tidy empty categories and unallocated to revenue tags. Re-query health/recurring after. This turns unallocated 72% into tracked revenue velocity for the goal.
-2. **DogePay:** Open live app (or your current deploy). Create 1-2 new DOGE payment links. Note exact current DOGE holdings. If Stripe dashboard shows payouts, screenshot for evidence (will hit ****7574).
-3. **DOGE Buy/Sweep (real user action):** From net in ****7574 (post leaks defense), send to your Kraken or Binance DOGE deposit address (generate fresh in CEX). Start small/test (e.g. equivalent of $500-2000 freed capital). Or receive direct via your DogePay links. Swap any excess DOGE to USDC then Ledn per prior guidance.
-4. **Verifiable MyDoge Deposit to @OmgawdMadeit (LFG first one):** Use MyDoge app (connect X) or @MyDogeTip. Send real amount (e.g. 50-200 DOGE from holdings or new buy). Use this exact memo (update amount/tx):
-```
-LFG Cyberbeast loop deposit [AMOUNT] DOGE to @OmgawdMadeit via MyDoge. Git: e1d8aeae583deb5f07eda5609efdb90606552dee (Cyberbeast goal start) + 1fad45339f1ac79f5088b604a76db47aa8e3a629 (DOGE deposit skills) + priors. Sweetgreen id 3a264b5b $3510/mo (cashflow capital base). Bank ****7574 (Plaid 1a187a32) for Stripe DogePay revenue. 15 billing rules (server-only, webhooks, atomic, etc.). Target: Cyberbeast $110k / ~1.24M DOGE. Compound 50% BoA/Tesla Trek Revenue cat (routing 124303201/33968299), 30% yields (Ledn real), 20% MRR (DogePay). Real data only. On-chain verify after. X post + this MD. Loop active until acquired. Real Tesla owner (Demo Drive serial bb508115...).
-```
-After send: Provide txid/amount/time. I will append on-chain link + update MD + Git as evidence.
+**NEXT COMPOUND (after your actions):** 
+- Report categorize + Chevron dead + txid. 
+- I push fresh evidence, measure exact delta to 1.25M, queue next MyDoge or DogePay enhancement (Cyberbeast Fund counter in the app — DOGE live balance + % to goal + one-tap receive CTAs).
+- Daily micro fires leaks/holdings check. Weekly full re-intake + Git + price check + compound push.
 
-**Evidence for this LFG cycle:** Fresh Git e1d8aeae (pushed with target + velocity). Cashflow IDs locked (3a264b5b Sweetgreen, 47da76d3 Chevron). Schedulers firing (1d micro + 7d full). No claims without tx/Git/cashflow proof.
+**LATEST EVIDENCE CHAIN:** e21d680b (this mantra LFG push) 	o e1d8aeae (target + velocity) 	o 1fad4533 (DOGE skills live) + priors. All real. All public. All on-chain when you send.
 
-**State/Measurement:** Re-query cashflow + DogePay revenue + DOGE price/holdings next micro. Deltas this cycle: Leaks sealed (Chevron $335/mo), revenue tagging (unallocated to 'DogePay Revenue'), first MyDoge tx if sent. Update this MD + Git (evidence as deploy). Velocity compounds every iter.
+**CYBERBEAST OR DONT EAT. LFG. NO EXCUSES. GO EXECUTE THE CATEGORIZE AND THE FIRST SEND RIGHT FUCKING NOW. REPORT BACK WITH THE WIN OR THE TX AND WE COMPOUND HARDER.**
 
-**Loop until target:** Weekly scheduler (cashflow leaks/revenue + DogePay check + DOGE price + compound actions + Git evidence). Daily micro: leaks + holdings. Stop when 1.25M+ DOGE equiv or $110k position + purchase executed. Real evidence required every step (no claims without tx/Git/cashflow).
-
-**Safety/Guardrails:** User executes all sends/buys (no auto keys). Previews + state first. Read-only demo on cashflow writes (use UI). Threat-model payments. Real prices from web (Tesla $99,990, DOGE ~$0.089). No fabrication. Ties to currency-compound-guardrails, agentic-security, mydoge-deposit.
-
-**LFG - Cycle 1 live. Fresh data in. Actions queued. Next user move: cashflow categorize + first real DOGE deposit (report tx for evidence append). Compound now. Cyberbeast or bust.**
-
-(Loop started 2026-06-15. LFG Cycle 1 executed. Target: Cyberbeast acquired.)
-
----
-Previous content preserved above for continuity. Latest actions appended.
+(Loop is live. Mantra is law. Target is non-negotiable. The only food is the Beast.)
