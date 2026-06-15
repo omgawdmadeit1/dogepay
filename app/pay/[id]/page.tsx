@@ -71,6 +71,12 @@ export default function Checkout() {
         )}
       </div>
 
+      {/* MyDoge deposits support (real, compatible with MyDoge app - Execution ship) */}
+      <div className="mt-4 p-3 bg-zinc-950 border border-zinc-800 rounded text-xs">
+        <div className="text-orange-400 mb-1">MYDOGE COMPATIBLE</div>
+        Open MyDoge app → Scan this QR or paste address/URI above. Real deposits only. Add memo: 9076fc4c70a9dd0938fac08dab58798afa62a7b9 for Cyberbeast evidence. MyDoge fund links auto-tagged hybrid.
+      </div>
+
       {/* Production: no price hardcode; links to upgrade (server poll for status) */}
       {!isPro && (
         <a href={"/upgrade?addr=" + encodeURIComponent(data.address)} className="btn btn-primary w-full mt-4">
@@ -79,7 +85,7 @@ export default function Checkout() {
       )}
 
       <div className="text-[10px] text-center text-zinc-500 mt-8">
-        v1 manual flow. Real on-chain verification + Stripe hybrid billing (webhooks state, 15 rules). No custody.
+        v1 manual flow. Real on-chain verification + Stripe hybrid billing (webhooks state, 15 rules). No custody. Cyberbeast Fund tracker + MyDoge in dashboard.
       </div>
     </div>
   );

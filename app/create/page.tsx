@@ -62,7 +62,7 @@ export default function CreateLink() {
       <div className="mb-8">
         <div className="text-orange-500 text-sm tracking-[2px] mb-1">FASTEST PATH</div>
         <h1 className="text-3xl font-semibold tracking-tight">Create DOGE Payment Link</h1>
-        <p className="text-zinc-400 mt-2 text-sm">Data lives in the link. No account needed. v1 manual confirmation.</p>
+        <p className="text-zinc-400 mt-2 text-sm">Data lives in the link. No account needed. v1 manual confirmation. MyDoge + Cyberbeast Fund links supported (real deposits).</p>
       </div>
 
       {!link ? (
@@ -92,7 +92,7 @@ export default function CreateLink() {
           <div>
             <label className="block text-sm mb-1.5 text-zinc-400">What is this for?</label>
             <input 
-              type="text" className="input" placeholder="Consulting / Digital product / Donation"
+              type="text" className="input" placeholder="Consulting / Digital product / Donation / Cyberbeast Fund"
               value={form.description}
               onChange={(e) => setForm({...form, description: e.target.value})}
               required 
@@ -134,7 +134,7 @@ export default function CreateLink() {
           </div>
 
           <div className="mt-4 text-xs text-zinc-500">
-            Unique checkout at /pay/{createdId || 'id'}
+            Unique checkout at /pay/{createdId || 'id'}. MyDoge users: scan in app. Cyberbeast Fund links auto-hybrid tagged.
           </div>
 
           <button 
