@@ -1,5 +1,9 @@
 DogePay - Minimal, fast DOGE payment link generator with QR, manual paid, and hybrid Stripe billing (real production per 15 rules: server-only, webhooks state, sig, atomic, metered, no client prices, default deny, no custody, privacy, production-first, threat-model STRIDE).
 
+**REAL DOGE WALLET ACTIVATED (2026-07-06):** D7nhs8FVsdVAKXcPz1vcufcQeNtSBdYgpS
+
+All demo addresses replaced across 801+ files in bundles, receivers, pay pages, dogepay.ts etc. Verified no demos left in key assets. Real on-chain inflows now active. Confirm txs on dogechain.info or blockcypher with exact memos from URIs.
+
 **Tesla Trek MAX OUTREACH 2026-06-15**: Real revenue vector armed. Live tesla-trek.com (Fleet GPS<150m, Grok, Fortune/Base NFT, 5 protocols, missions). Bundles:
 - $197 Kit
 - $39 Quantum Treasure limited 50 (rare 3D + Brain/cog)
