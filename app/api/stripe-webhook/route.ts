@@ -6,6 +6,7 @@
 
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { DEFAULT_FREE_TIER } from '../../../lib/billing-tiers';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-06-20' });
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -44,7 +45,7 @@ async function handleSubscriptionUpdated(subscription: any, previous: any = {}) 
   const wentPastDue = previous.status !== 'past_due' && subscription.status === 'past_due';
   if (newlyCanceled) {
     // Rule 12: schedule default free at period end
-    entitlements[customerId] = { ... (entitlements[customerId] || {}), plan: 'free', links: DEFAULT_FREE_TIER ? 5 : 0, analytics: false };
+    entitlements[customerId] = { ... (entitlements[customerId] || {}), plan: 'free', links: DEFAULT_FREE_TIER.links, analytics: DEFAULT_FREE_TIER.analytics };
     // In prod: create subscription_schedule for free tier at current_period_end
     console.log('[webhook] Scheduled default free for', customerId);
   }

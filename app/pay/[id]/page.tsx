@@ -1,30 +1,36 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
+import { paymentFromSearchParams } from '../../../lib/payment-link';
 
 // Production billing (post-audit ship): pro upgrade CTA generic (no hardcoded prices/amounts - rule 1,3,11). Entitlements from server webhook state only (poll /api/entitlements/check or status; localStorage hint only). Default deny. No client paid writes.
 export default function Checkout() {
   const { id } = useParams<{ id: string }>() || {};
+  const searchParams = useSearchParams();
   const [data, setData] = useState<any>(null);
   const [qr, setQr] = useState('');
   const [paid, setPaid] = useState(false);
   const [isPro, setIsPro] = useState(false); // from server-confirmed webhook only
 
   useEffect(() => {
-    if (!id) return;
-    const saved = localStorage.getItem(`dogepay_${id}`);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setData(parsed);
-      const paymentUri = `dogecoin:${parsed.address}?amount=${parsed.amount}`;
-      QRCode.toDataURL(paymentUri, { width: 240 }).then(setQr);
-      // Check server (in prod poll /api/billing/status or entitlements/check; v1 hint + note)
-      // Real: fetch(`/api/entitlements/check?customer=${parsed.address}`).then(r => r.json()).then(d => setIsPro(d.allowed))
-      setIsPro(!!localStorage.getItem(`pro_${parsed.address}`)); // transitional
+    const fromLink = paymentFromSearchParams(searchParams);
+    const saved = id ? localStorage.getItem(`dogepay_${id}`) : null;
+    let parsed = fromLink;
+    if (!parsed && saved) {
+      try {
+        parsed = JSON.parse(saved);
+      } catch {
+        parsed = null;
+      }
     }
-  }, [id]);
+    if (!parsed?.address || !parsed?.amount) return;
+    setData(parsed);
+    const paymentUri = `dogecoin:${parsed.address}?amount=${parsed.amount}`;
+    QRCode.toDataURL(paymentUri, { width: 240 }).then(setQr);
+    setIsPro(!!localStorage.getItem(`pro_${parsed.address}`));
+  }, [id, searchParams]);
 
   if (!data) {
     return <div className="p-8 text-center text-zinc-400">Loading payment...</div>;

@@ -1,6 +1,8 @@
 // lib/dogepay.ts - DogePay helpers (production-first, real only per 15 rules)
 // No client prices, default deny, no custody. Real on-chain for tracker.
 
+import { buildShareablePaymentPath } from './payment-link';
+
 export const CYBERBEAST_FUND_ADDRESS = 'DREPLACE_WITH_REAL_MYDOGE_DOGE_ADDR'; // e.g. from @OmgawdMadeit MyDoge. Real verified address only.
 
 export const CYBERBEAST_TARGET_DOGE = 1250000; // 1.25M DOGE for Cyberbeast
@@ -12,7 +14,10 @@ export function generateCyberbeastFundDogePayLink(amountDOGE: string, descriptio
   // In real: POST /api/create-link with fundTag: 'cyberbeast'
   return {
     id,
-    link: `/pay/${id}`,
+    link: buildShareablePaymentPath(
+      { address: CYBERBEAST_FUND_ADDRESS, amount: amountDOGE, description },
+      id,
+    ),
     address: CYBERBEAST_FUND_ADDRESS,
     amount: amountDOGE,
     description,

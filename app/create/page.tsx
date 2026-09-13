@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { buildShareablePaymentPath } from '../../lib/payment-link';
 
 // Generate a short unique id for /pay/[id] style links (v1)
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
-// Create clean /pay/[id] link + persist data under that id for the checkout
+// Create a shareable /pay/[id] link. Checkout data lives in the query string
+// so a payer on another device can load amount + address.
 function createPaymentLink(data: {
   address: string;
   amount: string;
@@ -16,25 +18,26 @@ function createPaymentLink(data: {
 }) {
   const id = generateId();
   const payload = { ...data, id, createdAt: new Date().toISOString() };
+  const path = buildShareablePaymentPath(data, id);
+  const link = `${window.location.origin}${path}`;
 
-  // Persist for the hosted /pay/[id] checkout (used by the dynamic route)
+  // Same-browser preview / dashboard history only — not the source of truth
   try {
     localStorage.setItem(`dogepay_${id}`, JSON.stringify(payload));
   } catch {}
 
-  // Also keep lightweight recent list (for dashboard)
   const recent = JSON.parse(localStorage.getItem('dogepay_recent') || '[]');
   recent.unshift({
     ...data,
     id,
     createdAt: payload.createdAt,
-    link: `${window.location.origin}/pay/${id}`,
+    link,
   });
   try {
     localStorage.setItem('dogepay_recent', JSON.stringify(recent.slice(0, 20)));
   } catch {}
 
-  return `${window.location.origin}/pay/${id}`;
+  return link;
 }
 
 export default function CreateLink() {
